@@ -4,7 +4,12 @@ from datetime import date
 class MoodSerializer(serializers.ModelSerializer):
   class Meta:
     model = Mood
-    fields = ('user', 'mood', 'date')
+    fields = ('user_id', 'mood', 'date')
+
+  def validate_user_id(self, value):
+    if not value:
+      raise serializers.ValidationError('User_id is required')
+    return value
 
   def validate(self, attrs):
     if 'date' not in attrs:
