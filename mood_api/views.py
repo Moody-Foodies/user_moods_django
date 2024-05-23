@@ -6,17 +6,27 @@ from.serializers import MoodSerializer
 
 class MoodListApiView(APIView):
   def get(self, request, *args, **kwargs):
-    moods = Mood.objects.filter(user = request.user_id)
+    user_id = request.query_params.get('user_id')
+    if not user_id:
+      return Response({"errors":{"detail": "User_id is required"}}, status=status.HTTP_400_BAD_REQUEST)
+    moods = Mood.objects.filter(user_id=user_id)
+
     serializer = MoodSerializer(moods, many = True)
     return Response(serializer.data, status=status.HTTP_200_OK)
   
   def post(self, request, *args, **kwargs):
-    data = {
-      'mood': request.data.get('mood'),
-      'date': request.data.get('date'),
-      'user': request.user_id
-    }
+    mood = request.data.get('mood')
+    date = request.data.get('date')
+    user_id = request.data.get('user_id')
 
+    if not user_id or not mood:
+      return Response({"errors":{"detail": "User_id and mood are required"}}, status=status.HTTP_400_BAD_REQUEST)
+    
+    data = {
+      'user_id': user_id,
+      'mood': mood,
+      'date': date
+    }
     serializer = MoodSerializer(data=data)
     if serializer.is_valid():
       serializer.save()
