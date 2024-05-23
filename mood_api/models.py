@@ -8,4 +8,4 @@ class Mood(models.Model):
   created = models.DateTimeField(auto_now = True, blank = True)
 
   def __str__(self):
-    return '%s, %s, %s' % (self.user_id, self.mood, self.date)
+    return f'{self.user_id}, {self.mood}, {self.date}'
