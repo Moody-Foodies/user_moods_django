@@ -16,7 +16,6 @@ class MoodListApiView(APIView):
   
   def post(self, request, *args, **kwargs):
     mood = request.data.get('mood')
-    date = request.data.get('date')
     user_id = request.data.get('user_id')
 
     if not user_id or not mood:
@@ -25,8 +24,8 @@ class MoodListApiView(APIView):
     data = {
       'user_id': user_id,
       'mood': mood,
-      'date': date
     }
+    
     serializer = MoodSerializer(data=data)
     if serializer.is_valid():
       serializer.save()

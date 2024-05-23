@@ -5,7 +5,6 @@ class Mood(models.Model):
   user_id = models.IntegerField(blank=False)
   mood = models.IntegerField(blank = False)
   date = models.DateTimeField(auto_now = True, blank = False)
-  created = models.DateTimeField(auto_now = True, blank = True)
 
   def __str__(self):
     return '%s, %s, %s' % (self.user_id, self.mood, self.date)
