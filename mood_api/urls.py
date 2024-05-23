@@ -4,5 +4,5 @@ from .views import (
 )
 
 urlpatterns = [
-  path('api/', MoodListApiView.as_view())
+  path('moods/', MoodListApiView.as_view(), name='mood_list')
 ]
