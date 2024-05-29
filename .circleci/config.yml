@@ -4,19 +4,15 @@ orbs:
   heroku: circleci/heroku@2.0
 jobs:
   build_and_test:
-    executor: python/default
+    docker:
+      - image: cimg/python:3.8-node
     steps:
       - checkout
-      - python/install-packages:
-        pkg-manager: pip
+      - python/install-packages
       - run:
-        name: Run tests
-        command: python manage.py test
-      -persist_to_wokspace:
-        root: ~/mood
-        paths:
-          - .
-
+          name: Run tests
+          command: python manage.py test
+  
   deploy:
     executor: heroku/default
     steps:
