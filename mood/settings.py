@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+import django_heroku
 from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -111,7 +112,7 @@ if IS_HEROKU_APP:
     # https://devcenter.heroku.com/articles/provisioning-heroku-postgres#application-config-vars
     # https://github.com/jazzband/dj-database-url
     DATABASES = {
-        "default": dj_database_url.config(
+        "default": config(
             env="DATABASE_URL",
             conn_max_age=600,
             conn_health_checks=True,
@@ -174,3 +175,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 WHITENOISE_KEEP_ONLY_HASHED_FILES = True
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+django_heroku.settings(locals())
