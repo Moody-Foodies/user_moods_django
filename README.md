@@ -13,6 +13,7 @@
 ## Prerequisites
 - Python 3.12.3
 - pip, version 24.0
+- PostgreSQL
 - virtualenv
 
 ## Installation
