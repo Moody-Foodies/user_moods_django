@@ -1,4 +1,5 @@
 import os
+import sys
 from pathlib import Path
 import django_heroku
 from decouple import config
@@ -79,13 +80,23 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'mood.wsgi.application'
 
-# HTTP strict Transport Security (HSTS) - Enhance security
-SECURE_HSTS_SECONDS = 31536000  # 1 year
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-SECURE_HSTS_PRELOAD = True
+IS_TESTING = 'test' in sys.argv
 
-# Allow http to be redirected to https
-SECURE_SSL_REDIRECT = True
+if not IS_TESTING:
+    # HTTP strict Transport Security (HSTS) - Enhance security
+    SECURE_HSTS_SECONDS = 31536000  # 1 year
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+
+    # Allow http to be redirected to https
+    SECURE_SSL_REDIRECT = True
+else:
+    SECURE_HSTS_SECONDS = 0
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = False
+    SECURE_HSTS_PRELOAD = False
+
+    # Disable SSL redirect during testing
+    SECURE_SSL_REDIRECT = False
 
 # Session cookie is only sent with https connection
 SESSION_COOKIE_SECURE = True
