@@ -1,0 +1,65 @@
+version: "2.1"
+orbs:
+  # python: circleci/python@2.1.1
+  heroku: circleci/heroku@2.0
+
+jobs:
+  build_and_test:
+    docker:
+      - image: cimg/python:3.8-node
+      - image: cimg/postgres:16.3-postgis
+        environment:
+          POSTGRES_DB: user_mood_test
+          POSTGRES_USER: postgres
+          POSTGRES_HOST: 127.0.0.1
+          POSTGRES_PORT: 5432
+    steps:
+      - checkout
+      - run:
+          name: Wait for PostgreSQL to be ready
+          command: |
+            for i in `seq 1 10`;
+            do
+              nc -z localhost 5432 && echo Success && exit 0;
+              echo "Waiting for PostgreSQL to start...";
+              sleep 1;
+            done;
+            echo "Failed to connect to PostgreSQL" && exit 1;
+      - run: 
+          name: Install dependencies
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install -r requirements.txt
+            pip install django 
+      - run:
+          name: Verify installation and activation
+          command: |
+            . venv/bin/activate
+            which python
+            python3 -m pip show django 
+      - run:
+          name: Run tests
+          command: |
+            . venv/bin/activate
+            
+            python manage.py test
+  
+  deploy:
+    executor: heroku/default
+    steps:
+      - checkout
+      - heroku/install
+      - heroku/deploy-via-git
+
+workflows:
+  build_test_deploy:
+    jobs:
+      - build_and_test
+      - deploy:
+          requires:
+            - build_and_test
+          filters:
+            branches:
+              only: 
+                - main
