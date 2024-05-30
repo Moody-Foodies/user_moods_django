@@ -36,7 +36,7 @@ jobs:
           name: Run tests
           command: |
             . venv/bin/activate
-            export DJANGO_SECRET_KEY=oi3bieche)boo7ienie7Ba4nA[cHeepoonilahchuOgh3kohn{ei3hoo9bAi7uosiey<u$ocAz}ah7shic7xAi7aicEith4chu!e
+            export DJANGO_SECRET_KEY='oi3bieche)boo7ienie7Ba4nA[cHeepoonilahchuOgh3kohn{ei3hoo9bAi7uosiey<u$ocAz}ah7shic7xAi7aicEith4chu!e'
             export POSTGRES_DB=test_db
             export POSTGRES_USER=circleci
             export POSTGRES_PASSWORD=circleci_pass
