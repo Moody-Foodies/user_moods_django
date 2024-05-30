@@ -22,19 +22,19 @@ jobs:
     steps:
       - checkout
       - run:
-        name: Wait for PostgreSQL to be ready
-        command: |
-          for i in `seq 1 10`;
-          do
-            nc -z localhost 5432 && echo Success && exit 0;
-            echo "Waiting for PostgreSQL to start...";
-            sleep 1;
-          done;
-          echo "Failed to connect to PostgreSQL" && exit 1;
+          name: Wait for PostgreSQL to be ready
+          command: |
+            for i in `seq 1 10`;
+            do
+              nc -z localhost 5432 && echo Success && exit 0;
+              echo "Waiting for PostgreSQL to start...";
+              sleep 1;
+            done;
+            echo "Failed to connect to PostgreSQL" && exit 1;
       - python/install-packages
       - run:
-        name: Run tests
-        command: python manage.py test
+          name: Run tests
+          command: python manage.py test
   
   deploy:
     executor: heroku/default
@@ -52,4 +52,5 @@ workflows:
             - build_and_test
           filters:
             branches:
-              only: main
+              only: 
+                - main
