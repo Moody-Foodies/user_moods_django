@@ -2,16 +2,16 @@ version: "2.1"
 orbs:
   # python: circleci/python@2.1.1
   heroku: circleci/heroku@2.0
+
 jobs:
   build_and_test:
     docker:
       - image: cimg/python:3.8-node
       - image: cimg/postgres:16.3-postgis
         environment:
-          POSTGRES_USER: circleci
+          POSTGRES_USER: postgres
           POSTGRES_DB: user_mood_test
-          POSTGRES_PASSWORD: circleci_pass
-          POSTGRES_HOST: localhost
+          POSTGRES_HOST: 127.0.0.1
           POSTGRES_PORT: 5432
     steps:
       - checkout
@@ -42,6 +42,7 @@ jobs:
           name: Run tests
           command: |
             . venv/bin/activate
+            
             python manage.py test
   
   deploy:
