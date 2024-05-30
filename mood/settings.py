@@ -2,6 +2,7 @@ import os
 import sys
 from pathlib import Path
 import django_heroku
+import dj_database_url
 from dj_database_url import parse as db_url_parse
 from decouple import config
 
@@ -130,7 +131,7 @@ else:
     # When running locally in development or in CI, a sqlite database file will be used instead
     # to simplify initial setup. Longer term it's recommended to use Postgres locally too.
     DATABASES = {
-        'default': db_url_parse.config(
+        'default': dj_database_url.config(
             default=os.getenv('DATABASE_URL'),
             conn_max_age=600,
             ssl_require=False
