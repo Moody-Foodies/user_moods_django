@@ -1,13 +1,13 @@
 version: "2.1"
 orbs:
-  python: circleci/python@2.1.1
+  # python: circleci/python@2.1.1
   heroku: circleci/heroku@2.0
 
 jobs:
   build_and_test:
     docker:
       - image: cimg/python:3.8-node
-      - image: circleci/postgres:13.2
+      - image: cimg/postgres:16.3-postgis
         environment:
           POSTGRES_USER: circleci
           POSTGRES_DB: test_db
@@ -44,9 +44,9 @@ jobs:
           command: |
             . venv/bin/activate
             export DJANGO_SECRET_KEY='oi3bieche)boo7ienie7Ba4nA[cHeepoonilahchuOgh3kohn{ei3hoo9bAi7uosiey<u$ocAz}ah7shic7xAi7aicEith4chu!e'
-            export POSTGRES_DB=test_db
-            export POSTGRES_USER=circleci
-            export POSTGRES_PASSWORD=circleci_pass
+            export POSTGRES_DB='test_db'
+            export POSTGRES_USER='circleci'
+            export POSTGRES_PASSWORD='circleci_pass'
             export POSTGRES_HOST=localhost
             export POSTGRES_PORT=5432
             python manage.py test
