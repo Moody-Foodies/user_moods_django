@@ -23,14 +23,14 @@ jobs:
       - checkout
       - run:
         name: Wait for PostgreSQL to be ready
-          command: |
-            for i in `seq 1 10`;
-            do
-              nc -z localhost 5432 && echo Success && exit 0;
-              echo "Waiting for PostgreSQL to start...";
-              sleep 1;
-            done;
-            echo "Failed to connect to PostgreSQL" && exit 1;
+        command: |
+          for i in `seq 1 10`;
+          do
+            nc -z localhost 5432 && echo Success && exit 0;
+            echo "Waiting for PostgreSQL to start...";
+            sleep 1;
+          done;
+          echo "Failed to connect to PostgreSQL" && exit 1;
       - python/install-packages
       - run:
         name: Run tests

@@ -132,9 +132,9 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': config('POSTGRES_DB', default='user_moods'),
-            'USER': config('POSTGRES_USER', default='igormagalhaes'),
-            'PASSWORD': config('POSTGRES_PASSWORD', default='user_moods_pgsql'),
+            'NAME': config('POSTGRES_DB', default='test_db'),
+            'USER': config('POSTGRES_USER', default='circleci'),
+            'PASSWORD': config('POSTGRES_PASSWORD', default='circleci_pass'),
             'HOST': config('POSTGRES_HOST', default='localhost'),
             'PORT': config('POSTGRES_PORT', default='5432'),
         }
