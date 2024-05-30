@@ -9,8 +9,8 @@ jobs:
       - image: cimg/python:3.8-node
       - image: cimg/postgres:16.3-postgis
         environment:
-          POSTGRES_USER: postgres
           POSTGRES_DB: user_mood_test
+          POSTGRES_USER: postgres
           POSTGRES_HOST: 127.0.0.1
           POSTGRES_PORT: 5432
     steps:
