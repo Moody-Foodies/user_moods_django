@@ -123,7 +123,7 @@ if not IS_HEROKU_APP:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'test_db',
+            'NAME': 'user_mood_test',
             'USER': 'circleci',
             'PASSWORD': 'circleci_pass',
             'HOST': 'localhost',
