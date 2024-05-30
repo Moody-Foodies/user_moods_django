@@ -106,11 +106,11 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': config('POSTGRES_DB'),
-            'USER': config('POSTGRES_USER'),
-            'PASSWORD': config('POSTGRES_PASSWORD'),
-            'HOST': config('POSTGRES_HOST', default='localhost'),
-            'PORT': config('POSTGRES_PORT', default='5432'),
+            'NAME': 'user_mood_test',
+            'USER': 'postgres',
+            'PASSWORD': 'your_password',
+            'HOST': 'localhost',
+            'PORT': '5432',
             'OPTIONS': {
                 'sslmode': 'disable',
             },
