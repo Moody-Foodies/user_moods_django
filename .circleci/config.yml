@@ -14,8 +14,6 @@ jobs:
           POSTGRES_PASSWORD: circleci_pass
           POSTGRES_HOST: localhost
           POSTGRES_PORT: 5432
-    environment:
-      DATABASE_URL: postgres://circleci:circleci_pass@localhost:5432/test_db?sslmode=disable
     steps:
       - checkout
       - run:
@@ -38,6 +36,12 @@ jobs:
           name: Run tests
           command: |
             . venv/bin/activate
+            export DJANGO_SECRET_KEY=oi3bieche)boo7ienie7Ba4nA[cHeepoonilahchuOgh3kohn{ei3hoo9bAi7uosiey<u$ocAz}ah7shic7xAi7aicEith4chu!e
+            export POSTGRES_DB=test_db
+            export POSTGRES_USER=circleci
+            export POSTGRES_PASSWORD=circleci_pass
+            export POSTGRES_HOST=localhost
+            export POSTGRES_PORT=5432
             python manage.py test
   
   deploy:
