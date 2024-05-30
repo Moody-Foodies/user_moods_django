@@ -5,13 +5,36 @@ orbs:
 jobs:
   build_and_test:
     docker:
-      - image: cimg/python:3.8
+      - image: cimg/python:3.8-node
+      - image: circleci/postgres:13.2
+        environment:
+          POSTGRES_USER: circleci
+          POSTGRES_DB: test_db
+          POSTGRES_PASSWORD: circleci_pass
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: 5432
+    environment:
+      POSTGRES_USER: circleci
+      POSTGRES_DB: test_db
+      POSTGRES_PASSWORD: circleci_pass
+      POSTGRES_HOST: localhost
+      POSTGRES_PORT: 5432
     steps:
       - checkout
+      - run:
+        name: Wait for PostgreSQL to be ready
+          command: |
+            for i in `seq 1 10`;
+            do
+              nc -z localhost 5432 && echo Success && exit 0;
+              echo "Waiting for PostgreSQL to start...";
+              sleep 1;
+            done;
+            echo "Failed to connect to PostgreSQL" && exit 1;
       - python/install-packages
       - run:
-          name: Run tests
-          command: python manage.py test
+        name: Run tests
+        command: python manage.py test
   
   deploy:
     executor: heroku/default
