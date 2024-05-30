@@ -113,7 +113,8 @@ else:
             'PORT': config('POSTGRES_PORT', default='5432'),
             'OPTIONS': {
                 'sslmode': 'disable',
-            }
+            },
+            'SUPERUSER': 'igormagalhaes',
         }
     }
 
