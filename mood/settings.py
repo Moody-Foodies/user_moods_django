@@ -107,9 +107,8 @@ else:
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': os.getenv('POSTGRES_DB', 'user_mood_test'),
-            'USER': os.getenv('POSTGRES_USER', 'circleci'),
-            'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'circleci_pass'),
-            'HOST': os.getenv('POSTGRES_HOST', 'localhost'),
+            'USER': os.getenv('POSTGRES_USER', 'postgres'),
+            'HOST': os.getenv('POSTGRES_HOST', '127.0.0.1'),
             'PORT': os.getenv('POSTGRES_PORT', '5432'),
             'OPTIONS': {
                 'sslmode': 'disable',
@@ -124,8 +123,7 @@ if not IS_HEROKU_APP:
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': 'user_mood_test',
-            'USER': 'circleci',
-            'PASSWORD': 'circleci_pass',
+            'USER': 'postgres',
             'HOST': 'localhost',
             'PORT': '5432',
         }
