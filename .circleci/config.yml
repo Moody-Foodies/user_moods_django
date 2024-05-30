@@ -7,7 +7,7 @@ jobs:
   build_and_test:
     docker:
       - image: cimg/python:3.8-node
-      - image: circleci/postgres:13.2
+      - image: circleci/postgres:9.5-alpine
         environment:
           POSTGRES_USER: circleci
           POSTGRES_DB: test_db
@@ -32,9 +32,23 @@ jobs:
             python3 -m venv venv
             . venv/bin/activate
             pip install -r requirements.txt
+            pip install django 
+      - run:
+          name: Verify installation and activation
+          command: |
+            . venv/bin/activate
+            which python
+            python3 -m pip show django 
       - run:
           name: Run tests
           command: |
+            . venv/bin/activate
+            export DJANGO_SECRET_KEY='oi3bieche)boo7ienie7Ba4nA[cHeepoonilahchuOgh3kohn{ei3hoo9bAi7uosiey<u$ocAz}ah7shic7xAi7aicEith4chu!e'
+            export POSTGRES_DB=test_db
+            export POSTGRES_USER=circleci
+            export POSTGRES_PASSWORD=circleci_pass
+            export POSTGRES_HOST=localhost
+            export POSTGRES_PORT=5432
             python manage.py test
   
   deploy:
