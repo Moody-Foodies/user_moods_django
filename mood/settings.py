@@ -107,8 +107,8 @@ else:
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': 'user_mood_test',
-            'USER': 'postgres',
-            'PASSWORD': 'your_password',
+            'USER': 'igormagalhaes',
+            'PASSWORD': 'lougor',
             'HOST': 'localhost',
             'PORT': '5432',
             'OPTIONS': {
