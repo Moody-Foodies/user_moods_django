@@ -106,7 +106,7 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'user_mood_test',
+            'NAME': 'test_db',
             'USER': 'circleci',
             'PASSWORD': 'circleci_pass',
             'HOST': 'localhost',
