@@ -100,9 +100,26 @@ CSRF_COOKIE_SECURE = True
 
 if IS_HEROKU_APP:
     DATABASES = {
-        "default": db_url_parse(os.environ.get("DATABASE_URL")),
+        "default": dj_database_url.config(default=os.environ.get("DATABASE_URL")),
     }
 else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': os.getenv('POSTGRES_DB', 'user_mood_test'),
+            'USER': os.getenv('POSTGRES_USER', 'circleci'),
+            'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'circleci_pass'),
+            'HOST': os.getenv('POSTGRES_HOST', 'localhost'),
+            'PORT': os.getenv('POSTGRES_PORT', '5432'),
+            'OPTIONS': {
+                'sslmode': 'disable',
+            },
+        }
+    }
+
+django_heroku.settings(locals())
+
+if not IS_HEROKU_APP:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -111,14 +128,8 @@ else:
             'PASSWORD': 'circleci_pass',
             'HOST': 'localhost',
             'PORT': '5432',
-            'OPTIONS': {
-                'sslmode': 'disable',
-            },
-            'SUPERUSER': 'igormagalhaes',
         }
     }
-
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -147,5 +158,3 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 WHITENOISE_KEEP_ONLY_HASHED_FILES = True
-
-django_heroku.settings(locals())
