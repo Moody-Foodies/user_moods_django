@@ -14,11 +14,7 @@ jobs:
           POSTGRES_HOST: localhost
           POSTGRES_PORT: 5432
     environment:
-      POSTGRES_USER: circleci
-      POSTGRES_DB: test_db
-      POSTGRES_PASSWORD: circleci_pass
-      POSTGRES_HOST: localhost
-      POSTGRES_PORT: 5432
+      DATABASE_URL: postgres://circleci:circleci_pass@localhost:5432/test_db
     steps:
       - checkout
       - run:
@@ -31,10 +27,17 @@ jobs:
               sleep 1;
             done;
             echo "Failed to connect to PostgreSQL" && exit 1;
-      - python/install-packages
+      - run: 
+          name: Install dependencies
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install -r requirements.txt
       - run:
           name: Run tests
-          command: python manage.py test
+          command: |
+            . venv/bin/activate
+            python manage.py test
   
   deploy:
     executor: heroku/default
